@@ -46,8 +46,18 @@ void print_2darray(int ** m, unsigned int * arr, unsigned int rows){
 
 unsigned int count_nodes(struct node *head){
 
+  int count = 0;
+
+  if (head == NULL){ 
+    
+    return 0;
+  }
+  while(head != NULL){
   
-  return 0;
+    count++;
+    head = head->next;
+  }
+  return count;
 }
 
 Node **split_list(Node *head, unsigned int num){
