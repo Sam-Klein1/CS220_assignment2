@@ -60,7 +60,56 @@ unsigned int count_nodes(struct node *head){
   return count;
 }
 
+//helper func to add nodes to a list from class
+struct node *add_new_node_at_head(struct node *head, struct node *node)
+{
+	node->next = head; 
+	return node; 
+}
+
+struct node *add_node_at_end(struct node *head, struct node *node)
+{
+	struct node *new_head = head; 
+	if(head == NULL) {
+		return add_new_node_at_head(head, node); 
+	}
+
+	while(head->next != NULL) {
+		head = head->next; 
+	}
+	head->next = node; 
+	node->next = NULL; 
+	return new_head; 
+}
+
 Node **split_list(Node *head, unsigned int num){
+
+  int i;
+  //malloc of array of pointers = num
+  Node **headarr = malloc(num * sizeof(Node*));
+  //set all of them to null
+  for(i=0; i<num; i++){
+    headarr[i] = NULL;
+  }
+  
+  if(head == NULL){
+    return headarr;
+  }
+  int index = 0;
+  Node *temp;
+  for(Node *node = head; node != NULL; node = temp){
+    temp = node->next;
+    if(index < num){
+      headarr[index] = node;
+    }
+    else{
+      add_node_at_end(headarr[index%num], node);
+    }
+      node->next = NULL;
+      index++;
+  }
+ 
+  return headarr;
         
   return NULL;
 }
