@@ -134,9 +134,24 @@ int get_float_exponent(float f){
 }
 
 int **custom_2dallocator(unsigned int *arr, unsigned int rows){
+  int **ret;
 
-  return NULL;
+  ret = (int **) malloc (rows * sizeof(int *));
 
+  if (ret == NULL)  return NULL;
+
+  int i;
+  for (i = 0; i< rows; i++){
+
+    ret[i] = (int *) malloc (rows * sizeof(int));
+    
+    if (ret[i] == NULL){
+      
+      return NULL;
+    }
+  }
+
+  return ret;
 }
 
 /* Make no changes to the code below this point */
