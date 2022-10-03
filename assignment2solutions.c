@@ -84,34 +84,37 @@ struct node *add_node_at_end(struct node *head, struct node *node)
 
 Node **split_list(Node *head, unsigned int num){
 
-  int i;
+	  int i;
   //malloc of array of pointers = num
   Node **headarr = malloc(num * sizeof(Node*));
   //set all of them to null
   for(i=0; i<num; i++){
     headarr[i] = NULL;
   }
-  
+
+  //edge case
   if(head == NULL){
     return headarr;
   }
+
   int index = 0;
   Node *temp;
-  for(Node *node = head; node != NULL; node = temp){
-    temp = node->next;
+
+  while (head != NULL){
+    temp = head->next;
     if(index < num){
-      headarr[index] = node;
+      headarr[index] = head;
     }
     else{
-      add_node_at_end(headarr[index%num], node);
+      add_node_at_end(headarr[index%num], head);
     }
-      node->next = NULL;
+      head->next = NULL;
       index++;
+      head = temp;
   }
- 
+
   return headarr;
-        
-  return NULL;
+ 
 }
 
 Node *node_swap(Node *head, unsigned int index1, unsigned int index2){
