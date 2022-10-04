@@ -169,11 +169,59 @@ Node *node_swap(Node *head, unsigned int index1, unsigned int index2){
   free(ptr2);
 }
 
+//helper function from class to return a Node after being delted from list
+struct node *del_node(struct node **head){
 
+  struct node *deleted_node;
+
+  if(head == NULL || *head == NULL) return NULL;
+  
+  deleted_node = *head;
+  *head = (*head)->next;
+
+  return deleted_node;
+}
 Node *interleave_list(Node *head1, Node *head2)
 {
         
-  return NULL; 
+    //make a new list to start adding nodes to
+  Node *ret = NULL;
+  
+  //edge cases
+  if (head1 == NULL && head2 == NULL){
+
+    return NULL;
+  }
+  if (head1 == NULL){
+
+    if(head2 == NULL){
+      return NULL;
+    }
+    else{
+      return head2;
+    }
+  }
+  if (head2 == NULL){
+
+    if(head1 == NULL){
+      return NULL;
+    }
+    else{
+      return head1;
+    }
+  }
+  //loop thru first list
+  while(head1 != NULL){
+
+    if(head2 != NULL){
+      ret = add_node_at_end(ret, del_node(&head1)); 
+      ret = add_node_at_end(ret, del_node(&head2));
+    }
+    else{ //if we get here, list 2 became NULL
+      ret = add_node_at_end(ret, del_node(&head1));
+    }
+  }
+  return ret; 
 }
 
 
