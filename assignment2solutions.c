@@ -133,7 +133,19 @@ Node *interleave_list(Node *head1, Node *head2)
 
 int get_float_exponent(float f){
 
-  return 0;
+  //edge case 
+  if (f == 0.0) return 0;
+  //look at raw bits
+  unsigned int *fp = (unsigned int *) &f; 
+  //create a mask to obtain exponent bits
+  unsigned int mask = 0x7F800000;
+  //and raw bits with mask 
+  int ret = *fp & mask;
+  //shift right 23 bits
+  ret = ret >> 23;
+  ret = ret - 127;
+
+  return ret;
 }
 
 int **custom_2dallocator(unsigned int *arr, unsigned int rows){
