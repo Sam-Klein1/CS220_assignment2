@@ -119,7 +119,54 @@ Node **split_list(Node *head, unsigned int num){
 
 Node *node_swap(Node *head, unsigned int index1, unsigned int index2){
 
-  return NULL;
+    //find the node u need to replace, then replace it with a dummy node. and hold on to the node you replace
+
+  //replace first node with dummy node 2, then replace second node with dummy node 1.
+  //edge cases
+  if (head == NULL){
+    return head;
+  }
+  if (index1 == index2){
+    return head;
+  }
+
+  //allocate 2 dummy nodes 
+  Node *ptr1 = malloc(sizeof(Node*));
+  Node *ptr2 = malloc(sizeof(Node*));
+  
+  //loop to find the node u need to replace 
+  int j = 0;
+  Node *ret = head;
+  
+  while(head != NULL){
+
+    if(j == index1){
+      //first index found
+      ptr1 = head;
+    }
+    else if(j == index2){
+      //second index found 
+      ptr2 = head;
+    }
+    head = head->next;
+    j++;
+  }
+  //j was never a valid index
+  if (j<=index1 || j<=index2){
+    return ret;
+  }
+  else{
+    //swap values at each ptr
+    int temp = ptr1->val;
+    ptr1->val = ptr2->val;
+    ptr2->val = temp;
+  }
+  
+  return ret;
+  
+  //free mallocd nodes
+  free(ptr1);
+  free(ptr2);
 }
 
 
